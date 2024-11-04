@@ -1,16 +1,15 @@
 package org.sesac.market.product.application.dto.request;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
+
+import static org.sesac.market.product.application.dto.Constants.HTTP_PROTOCOL;
 
 @Builder(toBuilder = true)
 public record UpdateProductRequest(
         @NotNull Long id,
         @NotEmpty String name,
-        @NotEmpty String image,
+        @NotEmpty @Pattern(regexp = HTTP_PROTOCOL) String image,
         @NotNull String description,
         @NotNull @PositiveOrZero int price,
         @NotNull @Positive int stock
