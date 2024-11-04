@@ -1,8 +1,7 @@
 package org.sesac.market.product.domain.model;
 
+import io.hypersistence.utils.hibernate.id.Tsid;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,9 +14,9 @@ import org.hibernate.annotations.Comment;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Product extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Tsid
     @Comment("ID")
     private Long id;
 
@@ -35,4 +34,13 @@ public class Product {
 
     @Comment("재고")
     private int stock;
+
+    public Product update(Product product) {
+        this.name = product.name != null ? product.name : this.name;
+        this.image = product.image != null ? product.image : this.image;
+        this.description = product.description != null ? product.description : this.description;
+        this.price = product.price;
+        this.stock = product.stock;
+        return this;
+    }
 }
