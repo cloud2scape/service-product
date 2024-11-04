@@ -10,8 +10,8 @@ public record ReadProductResponse(
         String name,
         String image,
         String description,
-        int price,
-        int stock,
+        Long price,
+        Integer stock,
         OffsetDateTime createdDate,
         OffsetDateTime modifiedDate
 ) {

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
 @Entity
@@ -29,11 +30,13 @@ public class Product extends BaseTimeEntity {
     @Comment("설명")
     private String description;
 
+    @ColumnDefault("0")
     @Comment("가격")
-    private int price;
+    private Long price;
 
+    @ColumnDefault("1")
     @Comment("재고")
-    private int stock;
+    private Integer stock;
 
     public Product update(Product product) {
         this.name = product.name != null ? product.name : this.name;

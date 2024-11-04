@@ -11,7 +11,7 @@ public record UpdateProductRequest(
         @NotEmpty String name,
         @NotEmpty @Pattern(regexp = HTTP_PROTOCOL) String image,
         @NotNull String description,
-        @NotNull @PositiveOrZero int price,
-        @NotNull @Positive int stock
+        @NotNull @PositiveOrZero Long price,
+        @NotNull @Positive Integer stock
 ) {
 }
