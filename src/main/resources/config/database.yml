@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: "jdbc:mysql://${PRODUCT_DB_HOST:localhost}:${PRODUCT_DB_PORT:3318}/${PRODUCT_DB_DATABASE:product}"
+    username: ${PRODUCT_DB_USER:root}
+    password: ${PRODUCT_DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
