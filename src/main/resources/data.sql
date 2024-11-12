@@ -8,8 +8,10 @@ VALUES (1, 'Product 1', 'https://picsum.photos/200', 'Description for product 1'
        (7, 'Product 7', 'https://picsum.photos/200', 'Description for product 7', 4000, 7, NOW(), NOW()),
        (8, 'Product 8', 'https://picsum.photos/200', 'Description for product 8', 4500, 8, NOW(), NOW()),
        (9, 'Product 9', 'https://picsum.photos/200', 'Description for product 9', 5000, 9, NOW(), NOW()),
-       (10, 'Product 10', 'https://picsum.photos/200', 'Description for product 10', 5500, 10, NOW(), NOW()),
-       (11, 'Product 11', 'https://picsum.photos/200', 'Description for product 11', 6000, 11, NOW(), NOW()),
+       (10, 'Product 10', 'https://picsum.photos/200', 'Description for product 10', 5500, 10, NOW(), NOW());
+
+INSERT INTO product (id, name, image, description, price, stock, created_date, modified_date)
+VALUES (11, 'Product 11', 'https://picsum.photos/200', 'Description for product 11', 6000, 11, NOW(), NOW()),
        (12, 'Product 12', 'https://picsum.photos/200', 'Description for product 12', 6500, 12, NOW(), NOW()),
        (13, 'Product 13', 'https://picsum.photos/200', 'Description for product 13', 7000, 13, NOW(), NOW()),
        (14, 'Product 14', 'https://picsum.photos/200', 'Description for product 14', 7500, 14, NOW(), NOW()),
