@@ -12,4 +12,6 @@ FROM openjdk:21-slim
 COPY --from=builder /app/build/libs/service-product.jar .
 
 ENTRYPOINT ["java", "-jar", "service-product.jar"]
-EXPOSE 8661
+EXPOSE 8663
+EXPOSE 8080
+EXPOSE 80
