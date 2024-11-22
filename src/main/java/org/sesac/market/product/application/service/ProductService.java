@@ -5,6 +5,8 @@ import org.sesac.market.product.application.dto.request.*;
 import org.sesac.market.product.application.port.input.ProductCommand;
 import org.sesac.market.product.application.port.input.ProductQuery;
 import org.sesac.market.product.application.port.output.ProductPort;
+import org.sesac.market.product.domain.event.Events;
+import org.sesac.market.product.domain.event.OrderCanceledEvent;
 import org.sesac.market.product.domain.exception.BizException;
 import org.sesac.market.product.domain.model.Product;
 import org.springframework.data.domain.Page;
@@ -68,5 +70,26 @@ public class ProductService implements ProductCommand, ProductQuery {
     @Override
     public Page<Product> read(ReadProductsRequest query) {
         return port.getMultiple(query.pageable());
+    }
+
+    @Override
+    @Transactional
+    public Product updateStock(UpdateProductStockDecreaseRequest request) {
+        Product product = port.get(request.productId())
+                .orElseThrow(BizException.NoneExists::new);
+
+        if (product.getStock() < request.quantity()) {
+            Events.raise(OrderCanceledEvent.builder()
+                    .orderId(request.orderId())
+                    .accountId(request.accountId())
+                    .productId(request.productId())
+                    .price(product.getPrice())
+                    .quantity(request.quantity())
+                    .reason("재고 부족>" + product.getStock())
+                    .build());
+            return product;
+        }
+
+        return product.decreaseStock(request.quantity());
     }
 }

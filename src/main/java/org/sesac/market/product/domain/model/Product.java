@@ -9,7 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
+@DynamicUpdate
+@DynamicInsert
 @Entity
 @Builder
 @Getter
@@ -44,6 +48,11 @@ public class Product extends BaseTimeEntity {
         this.description = product.description != null ? product.description : this.description;
         this.price = product.price;
         this.stock = product.stock;
+        return this;
+    }
+
+    public Product decreaseStock(int quantity) {
+        this.stock -= quantity;
         return this;
     }
 }
