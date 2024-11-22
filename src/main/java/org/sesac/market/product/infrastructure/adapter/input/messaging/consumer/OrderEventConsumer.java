@@ -7,10 +7,8 @@ import org.sesac.market.product.application.service.ProductService;
 import org.sesac.market.product.domain.event.OrderPlacedEvent;
 import org.sesac.market.product.domain.model.Product;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-@Async
 @Slf4j
 @Component
 @RequiredArgsConstructor
