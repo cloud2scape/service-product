@@ -10,6 +10,7 @@ spring:
         url: jdbc:mysql://${PRODUCT_DB_REPLICA_HOST:localhost}:${PRODUCT_DB_REPLICA_PORT:3318}/${PRODUCT_DB_REPLICA_DATABASE:product}
         username: ${PRODUCT_DB_REPLICA_USER:root}
         password: ${PRODUCT_DB_REPLICA_PASSWORD:root}
+      maximum-pool-size: ${DB_POOL_SIZE:10}
 
   sql:
     init:
