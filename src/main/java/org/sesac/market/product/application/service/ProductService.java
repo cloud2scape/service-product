@@ -1,5 +1,6 @@
 package org.sesac.market.product.application.service;
 
+import io.lettuce.core.RedisConnectionException;
 import lombok.RequiredArgsConstructor;
 import org.sesac.market.product.application.dto.request.*;
 import org.sesac.market.product.application.port.input.ProductCommand;
@@ -9,7 +10,11 @@ import org.sesac.market.product.domain.event.Events;
 import org.sesac.market.product.domain.event.OrderCanceledEvent;
 import org.sesac.market.product.domain.exception.BizException;
 import org.sesac.market.product.domain.model.Product;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,13 +67,36 @@ public class ProductService implements ProductCommand, ProductQuery {
     }
 
     @Override
+    @Cacheable(value = "product", key = "#query.id()", cacheManager = "productCacheManager")
+    @Retryable(retryFor = {RedisConnectionException.class}, maxAttempts = 1, backoff = @Backoff(delay = 100))
     public Product read(ReadProductRequest query) {
+        return getProduct(query);
+    }
+
+    @Recover
+    @SuppressWarnings("unused")
+    public Product readWithoutCache(ReadProductRequest query) {
+        return getProduct(query);
+    }
+    private Product getProduct(ReadProductRequest query) {
         return port.get(query.id())
                 .orElseThrow(BizException.NoneExists::new);
     }
 
     @Override
+    @Cacheable(value = "products", key = "#query.pageable()", cacheManager = "productCacheManager")
+    @Retryable(retryFor = {RedisConnectionException.class}, maxAttempts = 1, backoff = @Backoff(delay = 100))
     public Page<Product> read(ReadProductsRequest query) {
+        return getProducts(query);
+    }
+
+    @Recover
+    @SuppressWarnings("unused")
+    public Page<Product> readWithoutCache(ReadProductsRequest query) {
+        return getProducts(query);
+    }
+
+    private Page<Product> getProducts(ReadProductsRequest query) {
         return port.getMultiple(query.pageable());
     }
 
@@ -92,4 +120,6 @@ public class ProductService implements ProductCommand, ProductQuery {
 
         return product.decreaseStock(request.quantity());
     }
+
+
 }

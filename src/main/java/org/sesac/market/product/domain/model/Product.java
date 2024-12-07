@@ -12,6 +12,8 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.io.Serializable;
+
 @DynamicUpdate
 @DynamicInsert
 @Entity
@@ -19,7 +21,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product extends BaseTimeEntity {
+public class Product extends BaseTimeEntity implements Serializable {
     @Id
     @Tsid
     @Comment("ID")
