@@ -75,7 +75,6 @@ public class ProductController implements ProductApiDocs {
                 .name(product.getName())
                 .image(product.getImage())
                 .price(product.getPrice())
-                .stock(product.getStock())
                 .build());
 
         return ResponseEntity.ok(response);

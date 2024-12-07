@@ -7,7 +7,6 @@ public record ReadProductsResponse(
         Long id,
         String name,
         String image,
-        Long price,
-        Integer stock
+        Long price
 ) {
 }
