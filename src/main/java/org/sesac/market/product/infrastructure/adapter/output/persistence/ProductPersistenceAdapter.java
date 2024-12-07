@@ -3,6 +3,7 @@ package org.sesac.market.product.infrastructure.adapter.output.persistence;
 import lombok.RequiredArgsConstructor;
 import org.sesac.market.product.application.port.output.ProductPort;
 import org.sesac.market.product.domain.model.Product;
+import org.sesac.market.product.domain.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
